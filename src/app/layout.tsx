@@ -27,7 +27,7 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-black dark:text-white bg-white`}
       >
         <section className="max-w-7xl mx-auto px-10 lg:px-0">
           <Navbar />

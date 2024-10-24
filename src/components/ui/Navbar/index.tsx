@@ -1,27 +1,77 @@
 "use client";
 import MobileSearchComponent from "@/components/ui/MobileSearchComponent";
 import SearchComponent from "@/components/ui/SearchComponent";
-import { Heart } from "@phosphor-icons/react";
+import { Heart, Moon, Sun } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const Navbar = (): JSX.Element => {
+
+    const [theme, setTheme] = useState<"light" | "dark">("dark");
+
+    useEffect(() => {
+        const storedTheme = localStorage.getItem("theme");
+        if (storedTheme) {
+            setTheme(storedTheme as "light" | "dark");
+            document.documentElement.classList.add(storedTheme);
+        } else {
+            // If no theme is stored, use system preference
+            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            if (prefersDark) {
+                setTheme("dark");
+                document.documentElement.classList.add("dark");
+            }
+        }
+    }, []);
+
+    const toggleTheme = () => {
+        if (theme === "light") {
+            setTheme("dark");
+            localStorage.setItem("theme", "dark");
+            document.documentElement.classList.add("dark");
+            document.documentElement.classList.remove("light");
+        } else {
+            setTheme("light");
+            localStorage.setItem("theme", "light");
+            document.documentElement.classList.add("light");
+            document.documentElement.classList.remove("dark");
+        }
+    };
+
     return (
         <header>
             <nav>
                 <ul className="flex justify-between items-center gap-4 my-5">
                     <li>
                         <Link href={"/"}>
-                            <h1 className="uppercase font-extrabold text-2xl md:text-3xl tracking-widest">
+                            <h1 className="dark:text-white uppercase font-extrabold text-2xl md:text-3xl tracking-widest">
                                 TMovies
                             </h1>
                         </Link>
                     </li>
+
                     {/* For Large Devices */}
                     <li className="max-w-[600px] w-full">
                         <SearchComponent />
+
                     </li>
+
+
                     {/* For mobile Devices */}
-                    <li className="md:block flex items-center gap-1">
+                    <li className=" flex items-center gap-2">
+                        <div>
+                            {/* Dark/Light mode toggle button */}
+                            <button
+                                onClick={toggleTheme}
+                                className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800"
+                            >
+                                {theme === "light" ? (
+                                    <Moon size={20} className="text-gray-800 dark:text-white" />
+                                ) : (
+                                    <Sun size={20} className="text-gray-800 dark:text-white" />
+                                )}
+                            </button>
+                        </div>
                         <MobileSearchComponent />
                         <Link href={"/watchlist"}>
                             <div className="relative">

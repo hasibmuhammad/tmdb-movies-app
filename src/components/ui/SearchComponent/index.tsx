@@ -7,9 +7,9 @@ const SearchComponent = (): JSX.Element => {
     return (
         <form action="" onSubmit={handleSearch}>
             <div className="hidden md:block relative">
-                <input placeholder="Search by title..." className="w-full rounded-full border border-zinc-400 outline-none h-10 px-5" />
+                <input placeholder="Search by title..." className="w-full dark:text-black rounded-full border border-zinc-400 outline-none h-10 px-5" />
                 <button type="submit" className="absolute right-1 px-2 border border-zinc-400 border-r-0 border-t-0 border-b-0 h-full outline-none">
-                    <MagnifyingGlass size={20} />
+                    <MagnifyingGlass size={20} className="dark:text-black" />
                 </button>
             </div>
         </form>
