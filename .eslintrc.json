@@ -1,3 +1,107 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "ignorePatterns": ["next.config.mjs"],
+  // "overrides": [
+  //   {
+  //     "files": [
+  //       "sentry.client.config.ts",
+  //       "sentry.edge.config.ts",
+  //       "sentry.server.config.ts",
+  //       "./src/instrumentation.ts",
+  //       "./src/app/global-error.tsx"
+  //     ],
+  //     "rules": {
+  //       "@typescript-eslint/explicit-function-return-type": "off",
+  //       "@typescript-eslint/explicit-module-boundary-types": "off"
+  //     }
+  //   }
+  // ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "next/core-web-vitals"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "./",
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "unused-imports"],
+  "globals": {
+    "process": "readonly"
+  },
+  "rules": {
+    "unused-imports/no-unused-imports": "warn", // Set to warn for strictness
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "@typescript-eslint/explicit-module-boundary-types": "warn",
+    "@typescript-eslint/no-empty-function": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ],
+    "@typescript-eslint/no-duplicate-enum-values": "warn",
+    "no-duplicate-imports": "warn",
+    "@typescript-eslint/no-duplicate-imports": "off",
+    "@typescript-eslint/no-require-imports": "warn",
+    "@typescript-eslint/no-useless-empty-export": "warn",
+    "prefer-const": "warn",
+    "@typescript-eslint/consistent-generic-constructors": "warn",
+    "@typescript-eslint/consistent-type-definitions": "warn",
+    "@typescript-eslint/consistent-type-exports": "warn",
+    "@typescript-eslint/method-signature-style": "warn",
+    "@typescript-eslint/no-confusing-void-expression": "warn",
+    "@typescript-eslint/no-dynamic-delete": "warn",
+    "@typescript-eslint/no-extra-non-null-assertion": "warn",
+    "@typescript-eslint/no-inferrable-types": "warn",
+    "@typescript-eslint/no-non-null-assertion": "warn",
+    "@typescript-eslint/no-redundant-type-constituents": "warn",
+    "@typescript-eslint/no-this-alias": "warn",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-unnecessary-qualifier": "warn",
+    "@typescript-eslint/no-unnecessary-type-constraint": "warn",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/prefer-enum-initializers": "warn",
+    "@typescript-eslint/prefer-function-type": "warn",
+    "@typescript-eslint/prefer-string-starts-ends-with": "warn",
+    "@typescript-eslint/restrict-plus-operands": "warn",
+    "@typescript-eslint/switch-exhaustiveness-check": "warn",
+    "@typescript-eslint/unified-signatures": "warn",
+    "no-implied-eval": "off",
+    "@typescript-eslint/no-implied-eval": "warn",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": "warn",
+    "arrow-body-style": ["warn", "always"],
+    "block-scoped-var": "warn",
+    "default-case-last": "warn",
+    "default-param-last": "warn",
+    "max-classes-per-file": ["warn", 1],
+    "max-params": ["warn", 5],
+    "no-else-return": "warn",
+    "no-empty": "warn",
+    "no-empty-function": "warn",
+    "no-extra-semi": "warn",
+    "no-floating-decimal": "warn",
+    "no-nested-ternary": "warn",
+    "no-new": "warn",
+    "no-new-object": "warn",
+    "no-param-reassign": "warn",
+    "no-useless-concat": "warn",
+    "no-useless-return": "warn",
+    "prefer-template": "warn",
+    "yoda": "warn"
+  }
 }
