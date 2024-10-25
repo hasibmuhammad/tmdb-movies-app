@@ -1,4 +1,5 @@
 import Navbar from "@/components/ui/Navbar";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import TanstackProvider from "@/providers/TanstackProvider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -52,6 +53,9 @@ const RootLayout = ({
             <Navbar />
             {children}
           </section>
+
+          <ScrollToTop />
+
         </TanstackProvider>
       </body>
     </html>
