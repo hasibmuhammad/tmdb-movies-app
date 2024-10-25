@@ -5,17 +5,17 @@ import { TMDB_API_BASE_URL, TMDB_IMAGE_BASE_URL } from "@/constants";
 import { IPopularMoviesFullResponse } from "@/types";
 import { Star } from "@phosphor-icons/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef } from "react";
 
-const MovieList = (): JSX.Element => {
+const apiURL = `${TMDB_API_BASE_URL}/movie/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY}`;
 
+const MovieList = (): JSX.Element => {
     // restore to the top to prevent infinite calls of the api
     useLayoutEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, []);
-
 
     const {
         data,
@@ -25,11 +25,9 @@ const MovieList = (): JSX.Element => {
         isFetching: movieFetching,
     } = useInfiniteQuery({
         queryKey: ["popularMovies"],
-        queryFn: async ({ pageParam = 1 }) => {
+        queryFn: async ({ pageParam = 1 }): Promise<IPopularMoviesFullResponse | null> => {
             try {
-                const res: AxiosResponse<IPopularMoviesFullResponse> = await axios.get(
-                    `${TMDB_API_BASE_URL}/movie/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY}&page=${pageParam}`
-                );
+                const res = await axios.get<IPopularMoviesFullResponse>(`${apiURL}&page=${pageParam}`);
                 return res.data;
             } catch (error) {
                 console.error("Error fetching popular movies", error);
@@ -47,15 +45,13 @@ const MovieList = (): JSX.Element => {
         initialPageParam: 1,
     });
 
-
+    // For Infinite scroll when it reaches to the ref
     const triggerRef = useRef<HTMLDivElement | null>(null);
-
     useEffect(() => {
         const currentTriggerRef = triggerRef.current;
 
         const observer = new IntersectionObserver((entries) => {
             const entry = entries[0];
-            // Only fetch next page if it's intersecting and not currently fetching
             if (entry.isIntersecting && !isFetchingNextPage && hasNextPage) {
                 fetchNextPage();
             }
@@ -72,6 +68,7 @@ const MovieList = (): JSX.Element => {
         };
     }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
+
     return (
         <div className="mt-10 md:mt-20">
             <h1 className="font-bold text-2xl">Popular Movies</h1>
@@ -85,10 +82,10 @@ const MovieList = (): JSX.Element => {
                     {data?.pages.flatMap((page) => {
                         return page?.results?.map((movie) => {
                             return (
-                                <div className="rounded-md shadow-lg max-w-[300px] w-full dark:bg-bgDark dark:shadow-none" key={movie.id}>
+                                <div className="rounded-md shadow-lg max-w-[300px] w-full dark:bg-bgDark dark:shadow-none" key={movie?.id}>
                                     <Image
-                                        src={`${TMDB_IMAGE_BASE_URL}/w500${movie.poster_path}`} // default image
-                                        alt={movie.title}
+                                        src={`${TMDB_IMAGE_BASE_URL}/w500${movie?.poster_path}`}
+                                        alt={movie?.title}
                                         width={500}
                                         height={750}
                                         sizes="(max-width: 600px) 185px, (max-width: 1024px) 342px, 500px"
@@ -99,10 +96,10 @@ const MovieList = (): JSX.Element => {
                                         <div className="flex items-center">
                                             <Star weight="fill" fill="#FD7506" />
                                             <p>
-                                                {movie.vote_average.toFixed(1)} ( Votes: {movie.vote_count} )
+                                                {movie?.vote_average.toFixed(1)} ( Votes: {movie?.vote_count} )
                                             </p>
                                         </div>
-                                        <h1>{movie.title}</h1>
+                                        <h1>{movie?.title}</h1>
                                     </div>
                                 </div>
                             )
