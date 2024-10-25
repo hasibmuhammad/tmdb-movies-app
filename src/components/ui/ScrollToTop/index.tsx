@@ -38,7 +38,6 @@ const ScrollToTop = (): JSX.Element => {
       <div className="bg-bgDark dark:bg-gray-300/30 w-10 h-10 rounded-full p-2 flex justify-center items-center">
         <ArrowUp size={32} weight="regular" className="text-white" />
       </div>
-
       <span className="sr-only">Go to top</span>
     </button>
   );

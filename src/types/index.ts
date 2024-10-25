@@ -21,3 +21,7 @@ export interface IPopularMoviesFullResponse {
     total_pages: number;
     total_results: number;
 }
+
+export interface ISearchFormElements {
+    searchInput: string;
+}

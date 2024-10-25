@@ -1,5 +1,6 @@
 "use client";
 
+import { RootState } from "@/app/store/store";
 import EmptyListSkeleton from "@/components/ui/EmptyListSkeleton";
 import { TMDB_API_BASE_URL, TMDB_IMAGE_BASE_URL } from "@/constants";
 import { IPopularMoviesFullResponse } from "@/types";
@@ -8,10 +9,15 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 
 const apiURL = `${TMDB_API_BASE_URL}/movie/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY}`;
+const searchApiUrl = `${TMDB_API_BASE_URL}/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}`;
 
 const MovieList = (): JSX.Element => {
+
+    const query = useSelector((state: RootState) => { return state?.search?.query })
+
     // restore to the top to prevent infinite calls of the api
     useLayoutEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -24,11 +30,16 @@ const MovieList = (): JSX.Element => {
         hasNextPage,
         isFetching: movieFetching,
     } = useInfiniteQuery({
-        queryKey: ["popularMovies"],
-        queryFn: async ({ pageParam = 1 }): Promise<IPopularMoviesFullResponse | null> => {
+        queryKey: ["popularMovies", query],
+        queryFn: async ({ pageParam = 1 }) => {
             try {
+                if (query) {
+                    const res = await axios.get<IPopularMoviesFullResponse>(`${searchApiUrl}&page=${pageParam}&query=${query}`);
+                    return res.data;
+                }
                 const res = await axios.get<IPopularMoviesFullResponse>(`${apiURL}&page=${pageParam}`);
                 return res.data;
+
             } catch (error) {
                 console.error("Error fetching popular movies", error);
                 return null;
@@ -68,6 +79,7 @@ const MovieList = (): JSX.Element => {
         };
     }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
+    const hasMovies = data?.pages?.some(page => { return page?.results && page?.results?.length > 0 }) ?? false;
 
     return (
         <div className="mt-10 md:mt-20">
@@ -77,37 +89,40 @@ const MovieList = (): JSX.Element => {
             {/* Movies Section */}
             {movieFetching && !data ? (
                 <EmptyListSkeleton />
-            ) : (
-                <section className="mt-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center">
-                    {data?.pages.flatMap((page) => {
-                        return page?.results?.map((movie) => {
-                            return (
-                                <div className="rounded-md shadow-lg max-w-[300px] w-full dark:bg-bgDark dark:shadow-none" key={movie?.id}>
-                                    <Image
-                                        src={`${TMDB_IMAGE_BASE_URL}/w500${movie?.poster_path}`}
-                                        alt={movie?.title}
-                                        width={500}
-                                        height={750}
-                                        sizes="(max-width: 600px) 185px, (max-width: 1024px) 342px, 500px"
-                                        loading="lazy"
-                                        className="rounded-md rounded-b-none"
-                                    />
-                                    <div className="p-4">
-                                        <div className="flex items-center">
-                                            <Star weight="fill" fill="#FD7506" />
-                                            <p>
-                                                {movie?.vote_average.toFixed(1)} ( Votes: {movie?.vote_count} )
-                                            </p>
+            ) :
+                <>
+                    {hasMovies ? (
+                        <section className="mt-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center">
+                            {data?.pages.flatMap((page) => {
+                                return page?.results?.map((movie) => {
+                                    return (
+                                        <div className="rounded-md shadow-lg max-w-[300px] w-full dark:bg-bgDark dark:shadow-none" key={movie?.id}>
+                                            <Image
+                                                src={`${TMDB_IMAGE_BASE_URL}/w500${movie?.poster_path}`}
+                                                alt={movie?.title}
+                                                width={500}
+                                                height={750}
+                                                sizes="(max-width: 600px) 185px, (max-width: 1024px) 342px, 500px"
+                                                loading="lazy"
+                                                className="rounded-md rounded-b-none"
+                                            />
+                                            <div className="p-4">
+                                                <div className="flex items-center">
+                                                    <Star weight="fill" fill="#FD7506" />
+                                                    <p>
+                                                        {movie?.vote_average.toFixed(1)} ( Votes: {movie?.vote_count} )
+                                                    </p>
+                                                </div>
+                                                <h1>{movie?.title}</h1>
+                                            </div>
                                         </div>
-                                        <h1>{movie?.title}</h1>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
-                    )}
-                </section>
-            )}
+                                    )
+                                })
+                            }
+                            )}
+                        </section>) : <p className="mt-10">No movie found named: {`"${query}"`}</p>}
+                </>
+            }
 
             {/* Trigger div for intersection observer */}
             <div ref={triggerRef} className="h-1"></div>

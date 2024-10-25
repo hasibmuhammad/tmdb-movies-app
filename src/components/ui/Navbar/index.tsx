@@ -1,11 +1,17 @@
 "use client";
+import { resetQuery } from "@/app/redux/features/searchSlice";
+import { AppDispatch } from "@/app/store/store";
 import MobileSearchComponent from "@/components/ui/MobileSearchComponent";
 import SearchComponent from "@/components/ui/SearchComponent";
 import { Heart, Moon, Sun } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const Navbar = (): JSX.Element => {
+
+    const dispatch = useDispatch<AppDispatch>();
+
     const [theme, setTheme] = useState<"light" | "dark">("dark");
     useEffect(() => {
         const storedTheme = localStorage.getItem("theme") as "light" | "dark";
@@ -31,14 +37,14 @@ const Navbar = (): JSX.Element => {
             <nav>
                 <ul className="flex justify-between items-center gap-4 my-5">
                     <li>
-                        <Link href={"/"}>
+                        <Link href={"/"} onClick={() => { dispatch(resetQuery()) }}>
                             <h1 className="dark:text-white uppercase font-extrabold text-2xl md:text-3xl tracking-widest">
                                 TMovies
                             </h1>
                         </Link>
                     </li>
                     {/* For Large Devices */}
-                    <li className="max-w-[600px] w-full">
+                    <li className="max-w-[600px] w-full hidden md:block relative dark:text-black">
                         <SearchComponent />
                     </li>
 

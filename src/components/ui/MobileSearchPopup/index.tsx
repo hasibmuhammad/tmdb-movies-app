@@ -1,5 +1,5 @@
-import { MagnifyingGlass, X } from '@phosphor-icons/react';
-import React from 'react';
+import SearchComponent from '@/components/ui/SearchComponent';
+import { X } from '@phosphor-icons/react';
 
 interface IProps {
     isOpen: boolean;
@@ -7,11 +7,6 @@ interface IProps {
 }
 
 const SearchPopup = ({ isOpen, setIsOpen }: IProps): JSX.Element => {
-
-    const handleSearch = (e: React.FormEvent<HTMLElement>): void => {
-        e.preventDefault();
-        setIsOpen(false);
-    }
 
     return (
         <>
@@ -26,12 +21,7 @@ const SearchPopup = ({ isOpen, setIsOpen }: IProps): JSX.Element => {
                         </button>
 
                         <div className='relative'>
-                            <form onSubmit={handleSearch}>
-                                <input placeholder="Search by title..." className="w-full rounded-full border border-zinc-400 outline-none h-10 px-5" />
-                                <button type="submit" className="absolute right-1 px-2 border border-zinc-400 border-r-0 border-t-0 border-b-0 h-full outline-none">
-                                    <MagnifyingGlass size={20} />
-                                </button>
-                            </form>
+                            <SearchComponent onSearchComplete={() => { setIsOpen(false); }} />
                         </div>
                     </div>
                 </div>
