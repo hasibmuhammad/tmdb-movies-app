@@ -6,22 +6,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Navbar = (): JSX.Element => {
-
     const [theme, setTheme] = useState<"light" | "dark">("dark");
-
     useEffect(() => {
-        const storedTheme = localStorage.getItem("theme");
-        if (storedTheme) {
-            setTheme(storedTheme as "light" | "dark");
-            document.documentElement.classList.add(storedTheme);
-        } else {
-            // If no theme is stored, use system preference
-            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            if (prefersDark) {
-                setTheme("dark");
-                document.documentElement.classList.add("dark");
-            }
-        }
+        const storedTheme = localStorage.getItem("theme") as "light" | "dark";
+        setTheme(storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
     }, []);
 
     const toggleTheme = (): void => {
