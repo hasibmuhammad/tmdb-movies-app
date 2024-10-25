@@ -24,7 +24,7 @@ const Navbar = (): JSX.Element => {
         }
     }, []);
 
-    const toggleTheme = () => {
+    const toggleTheme = (): void => {
         if (theme === "light") {
             setTheme("dark");
             localStorage.setItem("theme", "dark");
@@ -49,15 +49,11 @@ const Navbar = (): JSX.Element => {
                             </h1>
                         </Link>
                     </li>
-
                     {/* For Large Devices */}
                     <li className="max-w-[600px] w-full">
                         <SearchComponent />
-
                     </li>
 
-
-                    {/* For mobile Devices */}
                     <li className=" flex items-center gap-2">
                         <div>
                             {/* Dark/Light mode toggle button */}
@@ -72,10 +68,13 @@ const Navbar = (): JSX.Element => {
                                 )}
                             </button>
                         </div>
+
+                        {/* For mobile Devices */}
                         <MobileSearchComponent />
+
                         <Link href={"/watchlist"}>
                             <div className="relative">
-                                <Heart size={32} />
+                                <Heart size={28} />
                                 <span className="absolute -top-3 -right-4 font-semibold">100</span>
                             </div>
                         </Link>

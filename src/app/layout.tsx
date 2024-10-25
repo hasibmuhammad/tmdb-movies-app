@@ -1,4 +1,5 @@
 import Navbar from "@/components/ui/Navbar";
+import TanstackProvider from "@/providers/TanstackProvider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -29,10 +30,12 @@ const RootLayout = ({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-black dark:text-white bg-white`}
       >
-        <section className="max-w-7xl mx-auto px-10 lg:px-0">
-          <Navbar />
-          {children}
-        </section>
+        <TanstackProvider>
+          <section className="max-w-7xl mx-auto px-10 lg:px-0">
+            <Navbar />
+            {children}
+          </section>
+        </TanstackProvider>
       </body>
     </html>
   );

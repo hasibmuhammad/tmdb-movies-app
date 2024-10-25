@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        bgDark: "#202020"
+      },
     },
   },
   plugins: [],

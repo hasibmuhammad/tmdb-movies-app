@@ -1,9 +1,10 @@
+import MovieList from "@/components/ui/MovieList";
 
 const Home = (): JSX.Element => {
   return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
+    <main>
+      <MovieList />
+    </main>
   );
 }
 

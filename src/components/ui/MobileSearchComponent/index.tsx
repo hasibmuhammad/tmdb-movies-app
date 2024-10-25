@@ -15,7 +15,7 @@ const MobileSearchComponent = (): JSX.Element => {
         <>
             {/* Search Icon for smaller devices */}
             <div onClick={togglePopup} className="block md:hidden">
-                <MagnifyingGlass size={32} />
+                <MagnifyingGlass size={28} />
             </div>
             {/* Popup for smaller devices */}
             <MobileSearchPopup isOpen={isOpen} setIsOpen={setIsOpen} />
