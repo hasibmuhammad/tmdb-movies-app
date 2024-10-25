@@ -103,7 +103,7 @@ const MovieList = (): JSX.Element => {
                                         <div className="flex items-center">
                                             <Star weight="fill" fill="#FD7506" />
                                             <p>
-                                                {movie.vote_average.toFixed(1)} (Vote: {movie.vote_count})
+                                                {movie.vote_average.toFixed(1)} ( Votes: {movie.vote_count} )
                                             </p>
                                         </div>
                                         <h1>{movie.title}</h1>
