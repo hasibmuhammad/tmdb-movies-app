@@ -14,3 +14,10 @@ export interface IPopularMovies {
     vote_average: number
     vote_count: number
 }
+
+export interface IPopularMoviesFullResponse {
+    results: IPopularMovies[];
+    page: number;
+    total_pages: number;
+    total_results: number;
+}

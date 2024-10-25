@@ -2,21 +2,20 @@
 
 import EmptyListSkeleton from "@/components/ui/EmptyListSkeleton";
 import { TMDB_API_BASE_URL, TMDB_IMAGE_BASE_URL } from "@/constants";
-import { IPopularMovies } from "@/types";
+import { IPopularMoviesFullResponse } from "@/types";
 import { Star } from "@phosphor-icons/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 const MovieList = (): JSX.Element => {
 
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+    // restore to the top to prevent infinite calls of the api
+    useLayoutEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }, []);
+
 
     const {
         data,
@@ -28,12 +27,7 @@ const MovieList = (): JSX.Element => {
         queryKey: ["popularMovies"],
         queryFn: async ({ pageParam = 1 }) => {
             try {
-                const res: AxiosResponse<{
-                    results: IPopularMovies[];
-                    page: number;
-                    total_pages: number;
-                    total_results: number;
-                }> = await axios.get(
+                const res: AxiosResponse<IPopularMoviesFullResponse> = await axios.get(
                     `${TMDB_API_BASE_URL}/movie/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY}&page=${pageParam}`
                 );
                 return res.data;
@@ -52,6 +46,7 @@ const MovieList = (): JSX.Element => {
         refetchOnWindowFocus: false,
         initialPageParam: 1,
     });
+
 
     const triggerRef = useRef<HTMLDivElement | null>(null);
 
