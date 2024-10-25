@@ -97,7 +97,7 @@ const MovieList = (): JSX.Element => {
                                 {data?.pages.flatMap((page) => {
                                     return page?.results?.map((movie) => {
                                         return (
-                                            <div className="rounded-md shadow-lg max-w-[300px] w-full dark:bg-bgDark dark:shadow-none" key={movie?.id}>
+                                            <div className="rounded-md shadow-lg max-w-[300px] w-full max-h-[530px] dark:bg-bgDark dark:shadow-none" key={movie?.id}>
                                                 <Image
                                                     src={`${TMDB_IMAGE_BASE_URL}/w500${movie?.poster_path}`}
                                                     alt={movie?.title}
@@ -114,7 +114,7 @@ const MovieList = (): JSX.Element => {
                                                             {movie?.vote_average.toFixed(1)} ( Votes: {movie?.vote_count} )
                                                         </p>
                                                     </div>
-                                                    <h1>{movie?.title}</h1>
+                                                    <h1 className="max-w-full w-full truncate">{movie?.title}</h1>
                                                 </div>
                                             </div>
                                         )
