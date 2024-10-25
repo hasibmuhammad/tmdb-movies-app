@@ -10,6 +10,14 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 
 const MovieList = (): JSX.Element => {
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, []);
+
     const {
         data,
         isFetchingNextPage,
@@ -68,13 +76,6 @@ const MovieList = (): JSX.Element => {
             }
         };
     }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
-
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    }, []);
 
     return (
         <div className="mt-10 md:mt-20">
