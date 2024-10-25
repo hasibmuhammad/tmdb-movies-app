@@ -1,10 +1,10 @@
 "use client";
 import { search } from "@/app/redux/features/searchSlice";
+import { AppDispatch } from "@/app/store/store";
 import { ISearchFormElements } from "@/types";
 import { SearchSchema } from "@/zodSchemas/index";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MagnifyingGlass } from "@phosphor-icons/react";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
@@ -13,11 +13,9 @@ interface IProps {
 }
 
 const SearchComponent = ({ onSearchComplete }: IProps): JSX.Element => {
-    const router = useRouter();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ISearchFormElements>({ resolver: zodResolver(SearchSchema) });
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const handleSearch = (data: ISearchFormElements): void => {
-        router.push(`?query=${data?.searchInput}`);
         dispatch(search(data?.searchInput));
         reset();
         if (onSearchComplete) {

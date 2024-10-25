@@ -83,7 +83,7 @@ const MovieList = (): JSX.Element => {
 
     return (
         <div className="mt-10 md:mt-20">
-            <h1 className="font-bold text-2xl">Popular Movies</h1>
+            <h1 className="font-bold text-2xl">{query ? `Search Result: ${query}` : "Popular Movies"}</h1>
             <div className="bg-emerald-500 w-[44px] h-1 rounded-full mt-1"></div>
 
             {/* Movies Section */}
@@ -92,35 +92,38 @@ const MovieList = (): JSX.Element => {
             ) :
                 <>
                     {hasMovies ? (
-                        <section className="mt-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center">
-                            {data?.pages.flatMap((page) => {
-                                return page?.results?.map((movie) => {
-                                    return (
-                                        <div className="rounded-md shadow-lg max-w-[300px] w-full dark:bg-bgDark dark:shadow-none" key={movie?.id}>
-                                            <Image
-                                                src={`${TMDB_IMAGE_BASE_URL}/w500${movie?.poster_path}`}
-                                                alt={movie?.title}
-                                                width={500}
-                                                height={750}
-                                                sizes="(max-width: 600px) 185px, (max-width: 1024px) 342px, 500px"
-                                                loading="lazy"
-                                                className="rounded-md rounded-b-none"
-                                            />
-                                            <div className="p-4">
-                                                <div className="flex items-center">
-                                                    <Star weight="fill" fill="#FD7506" />
-                                                    <p>
-                                                        {movie?.vote_average.toFixed(1)} ( Votes: {movie?.vote_count} )
-                                                    </p>
+                        <>
+                            <section className="mt-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center">
+                                {data?.pages.flatMap((page) => {
+                                    return page?.results?.map((movie) => {
+                                        return (
+                                            <div className="rounded-md shadow-lg max-w-[300px] w-full dark:bg-bgDark dark:shadow-none" key={movie?.id}>
+                                                <Image
+                                                    src={`${TMDB_IMAGE_BASE_URL}/w500${movie?.poster_path}`}
+                                                    alt={movie?.title}
+                                                    width={500}
+                                                    height={750}
+                                                    sizes="(max-width: 600px) 185px, (max-width: 1024px) 342px, 500px"
+                                                    loading="lazy"
+                                                    className="rounded-md rounded-b-none"
+                                                />
+                                                <div className="p-4">
+                                                    <div className="flex items-center">
+                                                        <Star weight="fill" fill="#FD7506" />
+                                                        <p>
+                                                            {movie?.vote_average.toFixed(1)} ( Votes: {movie?.vote_count} )
+                                                        </p>
+                                                    </div>
+                                                    <h1>{movie?.title}</h1>
                                                 </div>
-                                                <h1>{movie?.title}</h1>
                                             </div>
-                                        </div>
-                                    )
-                                })
-                            }
-                            )}
-                        </section>) : <p className="mt-10">No movie found named: {`"${query}"`}</p>}
+                                        )
+                                    })
+                                }
+                                )}
+                            </section>
+                        </>
+                    ) : <p className="mt-10">Not Found!</p>}
                 </>
             }
 
