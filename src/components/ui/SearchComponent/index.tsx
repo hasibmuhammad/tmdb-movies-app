@@ -26,7 +26,7 @@ const SearchComponent = ({ onSearchComplete }: IProps): JSX.Element => {
     return (
         <form action="" onSubmit={handleSubmit(handleSearch)}>
             <div className="relative">
-                <input {...register("searchInput")} placeholder="Search by title..." className={`w-full rounded-full border border-zinc-400 outline-none h-10 px-5 ${errors?.searchInput ? "border border-red-500" : ""}`} />
+                <input {...register("searchInput")} placeholder="Search by title..." className={`w-full rounded-full outline-none h-10 px-5 ${errors?.searchInput ? "border border-red-500" : "border border-zinc-400"}`} />
                 {errors && errors?.searchInput && <p className="absolute md:right-12 md:top-3 text-red-500 text-xs">{errors?.searchInput?.message}</p>}
                 <button type="submit" className="absolute right-1 px-2 border border-zinc-400 border-r-0 border-t-0 border-b-0 h-full outline-none">
                     <MagnifyingGlass size={20} className="" />
