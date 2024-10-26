@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { z } from 'zod';
@@ -25,9 +26,11 @@ interface IMovieDetailProps {
 
 const MovieDetail = ({ movie, recommendations }: IMovieDetailProps): JSX.Element => {
 
+    const pathName = usePathname();
+
     const watchlistItems = useSelector((state: RootState) => {
         return state.watchList.items;
-    })
+    });
     const dispatch = useDispatch<AppDispatch>();
     const castApIUrl = `${TMDB_API_BASE_URL}/movie/${movie?.id}/credits?api_key=${process.env.NEXT_PUBLIC_API_KEY}`;
 
@@ -69,7 +72,7 @@ const MovieDetail = ({ movie, recommendations }: IMovieDetailProps): JSX.Element
                         <div className="mt-10 md:mt-20 flex items-center font-semibold dark:font-bold gap-2  dark:text-white">
                             <Link href="/"><span>Movies</span> </Link>
                             <CaretRight weight="bold" />
-                            <Link href={`/movies/${movie?.id}`}><span>Details</span></Link>
+                            <Link href={`/movies/${movie?.id}`}><span className={`${pathName.includes("/movies/") ? "text-emerald-500" : ""}`}>Details</span></Link>
                         </div>
                         <div className="mt-5">
                             <div className="flex flex-col md:flex-row gap-5">
