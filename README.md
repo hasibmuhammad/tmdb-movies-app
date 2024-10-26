@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Movie App with TMDB API &Next.js
 
-## Getting Started
+### Live URL:
 
-First, run the development server:
+[https://tmdb-movies-web.vercel.app](https://tmdb-movies-web.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Used Technologies:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Next.js(v14.2.16)
+- TypeScript
+- Redux Toolkit
+- Tanstack Query
+- ISR, SSR, CSR
+- TMDB API
+- ESlint - For Quality Code Validation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Features:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Responsive Layout
+- Movie Listing
+- Infinite Scroll of movies
+- Search Bar(By title)
+- Movie Detail Page
+- Related Recommendations of a certain movie
+- ISR - Get fresh data in each 60 seconds after build
+- WatchList Page - to showcase added to watchlist movies
+- Add To Watchlist
+- Remove From Watchlist
+- Show total added watchlist count on the navigation
+- Dark/Light Mode - With Persistance
+- Validated API Response using Zod for Movie Detail API
+- Optimistic UI - Showed Skeleton and Loader with spinning while loading data
+- Scroll To Topbar
 
-## Learn More
+### Fully Utilized
 
-To learn more about Next.js, take a look at the following resources:
+I tried to utilize the power of `Redux`, `Tanstack Query`, `Tailwind CSS` and `TypeScript` within a short time.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Future Work
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Add Unit Test(I prefer `Jest`)
+- Monitor the dashboard of `Codacy` after integrating to it to check the code quality.
+- Can eliminate the searchbar from places where it doesn't need.
 
-## Deploy on Vercel
+For `add to watchlist` i could take the advantage of `Server Actions`. But I got shortage of time to deep dive this `Server Actions` part. I wish to make this application more robust in future considering more user-friendly UI, Performance, efficient API handling etc.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Steps i would take to use `Server Actions` for the Add To Watchlist features:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Utilize `action` attribute of form
+- In the Action Listener i would create a function named `addToWatchlist` and i would use `use server;`
+- Then i would make a post request to add an id to the `items[]`
+- I would store the ids in the database in a collection named `watchlists`
+- Then I would make a request to get all the wathlist ids and using those ids i would make a `TMDB API` call to get all the movies according to the ids.
+- Then i would showed the movies card in the watchlist page.
