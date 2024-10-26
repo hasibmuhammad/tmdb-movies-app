@@ -22,7 +22,7 @@
 - Movie Listing
 - Infinite Scroll of movies
 - Search Bar(By title)
-- Used React-Hook-Form and Zod to validate search form
+- Used React-Hook-Form and Zod to validate search form and search operation
 - Movie Detail Page
 - Related Recommendations of a certain movie
 - ISR - Get fresh data in each 60 seconds after build
