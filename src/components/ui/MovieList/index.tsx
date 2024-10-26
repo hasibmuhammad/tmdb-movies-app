@@ -2,12 +2,12 @@
 
 import { RootState } from "@/app/store/store";
 import EmptyListSkeleton from "@/components/ui/EmptyListSkeleton";
-import { TMDB_API_BASE_URL, TMDB_IMAGE_BASE_URL } from "@/constants";
+import SingleMovie from "@/components/ui/SingleMovie";
+import { TMDB_API_BASE_URL } from "@/constants";
 import { IPopularMoviesFullResponse } from "@/types";
-import { Star } from "@phosphor-icons/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
@@ -97,26 +97,9 @@ const MovieList = (): JSX.Element => {
                                 {data?.pages.flatMap((page) => {
                                     return page?.results?.map((movie) => {
                                         return (
-                                            <div className="rounded-md shadow-lg max-w-[300px] w-full max-h-[530px] dark:bg-bgDark dark:shadow-none" key={movie?.id}>
-                                                <Image
-                                                    src={`${TMDB_IMAGE_BASE_URL}/w500${movie?.poster_path}`}
-                                                    alt={movie?.title}
-                                                    width={500}
-                                                    height={750}
-                                                    sizes="(max-width: 600px) 185px, (max-width: 1024px) 342px, 500px"
-                                                    loading="lazy"
-                                                    className="rounded-md rounded-b-none"
-                                                />
-                                                <div className="p-4">
-                                                    <div className="flex items-center">
-                                                        <Star weight="fill" fill="#FD7506" />
-                                                        <p>
-                                                            {movie?.vote_average.toFixed(1)} ( Votes: {movie?.vote_count} )
-                                                        </p>
-                                                    </div>
-                                                    <h1 className="max-w-full w-full truncate">{movie?.title}</h1>
-                                                </div>
-                                            </div>
+                                            <Link key={movie?.id} href={`/movies/${movie?.id}`}>
+                                                <SingleMovie movie={movie} />
+                                            </Link>
                                         )
                                     })
                                 }
