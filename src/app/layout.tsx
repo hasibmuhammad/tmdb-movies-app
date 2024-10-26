@@ -30,6 +30,7 @@ const RootLayout = ({
   return (
     <html lang="en">
       <head>
+        <link rel="shortcut icon" href="/favicon.webp" type="image/x-icon" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
