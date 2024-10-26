@@ -10,6 +10,8 @@
 - TypeScript
 - Redux Toolkit
 - Tanstack Query
+- Zod
+- React Hook Form
 - ISR, SSR, CSR
 - TMDB API
 - ESlint - For Quality Code Validation
@@ -20,6 +22,7 @@
 - Movie Listing
 - Infinite Scroll of movies
 - Search Bar(By title)
+- Used React-Hook-Form and Zod to validate search form
 - Movie Detail Page
 - Related Recommendations of a certain movie
 - ISR - Get fresh data in each 60 seconds after build
