@@ -1,4 +1,4 @@
-## Movie App with TMDB API &Next.js
+## Movie App with TMDB API & Next.js
 
 ### Live URL:
 
